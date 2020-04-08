@@ -2,7 +2,7 @@
 
 - laravel と cakephp がすぐに使える docker 環境が欲しかった
 
-## php コンテナの bash を実行する
+## php コンテナの bash を実行するまで
 
 1. このリポジトリをクローンして中に入る
 
