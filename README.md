@@ -36,14 +36,14 @@
 
 ## laravel をインストールする
 
-1. php コンテナの /var/www/html で下記コマンドを実行する
+1. php コンテナの /var/www/html で下記のコマンドを実行する
    ```
    composer create-project --prefer-dist laravel/laravel=6.* mylaravelapp
    ```
 
 ## cakephp をインストールする
 
-1. php コンテナの /var/www/html で下記コマンドを実行する
+1. php コンテナの /var/www/html で下記のコマンドを実行する
    ```
    composer create-project --prefer-dist cakephp/app:^3.8 mycakephpapp
    ```
