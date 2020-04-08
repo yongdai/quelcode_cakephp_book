@@ -18,7 +18,7 @@
    # ホストのuidを調べる
    id -u
 
-   # php/Dockerfile の ARG DOCKER_UID=1000 の右辺を↑で調べた値にする
+   # docker/php/Dockerfile の ARG DOCKER_UID=1000 の右辺を↑で調べた値にする
    vim docker/php/Dockerfile
    ```
 
