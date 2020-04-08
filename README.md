@@ -31,7 +31,7 @@
 1. php コンテナの bash を実行する
 
    ```
-   docker-compose exec bash
+   docker-compose exec php bash
    ```
 
 ## laravel をインストールする
