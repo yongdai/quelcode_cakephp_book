@@ -20,8 +20,6 @@ services:
       MYSQL_USER: docker_db_user
       MYSQL_PASSWORD: docker_db_user_pass
       TZ: Asia/Tokyo
-    ports:
-      - 13306:3306
     volumes:
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/mysql/data:/var/lib/mysql
