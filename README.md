@@ -48,6 +48,39 @@
    composer create-project --prefer-dist cakephp/app:^3.8 mycakephpapp
    ```
 
+## nginx のドキュメントルートを変更する
+
+1. docker/nginx/default.conf を下記のように書き換える
+
+   - mylaravelapp という名前の laravel アプリを作成した場合
+
+     ```diff
+     server {
+     - root  /var/www/html;
+     + root  /var/www/html/mylaravelapp/public;
+       index index.php index.html;
+       ...
+     ```
+
+   - mycakephpapp という名前の cakephp アプリを作成した場合
+     ```diff
+     server {
+     - root  /var/www/html;
+     + root  /var/www/html/mycakephpapp/webroot;
+       index index.php index.html;
+       ...
+     ```
+
+1. コンテナを再起動する
+
+   ```
+   # 停止
+   docker-compose down
+
+   # 起動
+   docker-compose up -d
+   ```
+
 ## 備考
 
 - コーディング
