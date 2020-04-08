@@ -12,7 +12,7 @@
    cd docker-lemp-composer1
    ```
 
-1. docker/php/Dockerfile の DOCKER_UID をホストと同じにする
+1. docker/php/Dockerfile の DOCKER_UID をホストと合わせる
 
    ```
    # ホストのuidを調べる
