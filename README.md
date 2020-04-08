@@ -81,6 +81,8 @@
    docker-compose up -d
    ```
 
+1. ブラウザで http://localhost:10080 にアクセスすると laravel または cakephp のトップページが表示される
+
 ## 備考
 
 - php コンテナの bash ユーザ: docker について
