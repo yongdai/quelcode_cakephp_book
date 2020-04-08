@@ -36,14 +36,14 @@
 
 ## laravel をインストールする
 
-1. php コンテナの `/var/www/html` で下記コマンドを実行する
+1. php コンテナの /var/www/html で下記コマンドを実行する
    ```
    composer create-project --prefer-dist laravel/laravel=6.* mylaravelapp
    ```
 
 ## cakephp をインストールする
 
-1. php コンテナの `/var/www/html` で下記コマンドを実行する
+1. php コンテナの /var/www/html で下記コマンドを実行する
    ```
    composer create-project --prefer-dist cakephp/app:^3.8 mycakephpapp
    ```
@@ -55,7 +55,7 @@
   - ホスト側で、php コンテナがマウントしている html/ 配下を編集する
 
 - DB 接続
-  - DB ホストは `mysql`
+  - DB ホストは mysql
   - mysql の port は 3306
   - mysql のアカウントは docker-compose.yml を参照
     - MYSQL_DATABASE: docker_db
