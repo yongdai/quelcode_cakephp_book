@@ -87,7 +87,7 @@
 
   - ホスト側で、php コンテナがマウントしている html/ 配下を編集する
 
-- DB 接続
+- DB 接続(本番リリースを想定する場合は必ず再設定してください)
   - DB ホストは mysql
   - mysql の port は 3306
   - mysql のアカウントは docker-compose.yml を参照
