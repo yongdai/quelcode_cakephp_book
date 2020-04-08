@@ -34,6 +34,13 @@
    docker-compose exec php bash
    ```
 
+1. コンテナの bash を抜ける
+
+   ```
+   # 下記のショートカットキーを入力する
+   ctrl + p + q
+   ```
+
 ## laravel をインストールする
 
 - php コンテナの /var/www/html で下記のコマンドを実行する
