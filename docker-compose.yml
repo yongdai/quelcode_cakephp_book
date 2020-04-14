@@ -13,7 +13,7 @@ services:
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
       - ./html:/var/www/html
   mysql:
-    image: mysql:8.0
+    build: ./docker/mysql
     environment:
       MYSQL_DATABASE: docker_db
       MYSQL_ROOT_PASSWORD: root
@@ -21,5 +21,4 @@ services:
       MYSQL_PASSWORD: docker_db_user_pass
       TZ: Asia/Tokyo
     volumes:
-      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/mysql/data:/var/lib/mysql
