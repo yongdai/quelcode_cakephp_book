@@ -17,7 +17,7 @@ class MessagesController extends AppController {
         }
         $data = $this->Messages->find('all')
                                 ->contain(['People'])
-                                ->order(['create_at' => 'desc']);
+                                ->order(['created_at' => 'desc']);
         $this->set('data', $data);
         $this->set('entity', $entity);
     }

@@ -24,7 +24,7 @@
     <td><?=h($obj->id) ?></td>
     <td><?=h($obj->message) ?></td>
     <td><?=h($obj->person->name) ?></td>
-    <td><?=h($obj->create_at) ?></td>
+    <td><?=h($obj->created_at) ?></td>
 </tr>
 <?php endforeach; ?>
 </table>
