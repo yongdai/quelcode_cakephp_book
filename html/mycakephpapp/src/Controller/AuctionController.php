@@ -59,7 +59,7 @@ class AuctionController extends AuctionBaseController {
             // Bidinfoのbiditem_idに$idを設定
             $bidinfo->biditem_id = $id;
             // 最高金額のBidrequestを検索
-            $bidrequest = $this->Bidrequeests->find('all', [
+            $bidrequest = $this->Bidrequests->find('all', [
                 'conditions' => ['biditem_id' => $id],
                 'contain' => ['Users'],
                 'order' => ['price' => 'desc']
