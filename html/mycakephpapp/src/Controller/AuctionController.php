@@ -180,8 +180,8 @@ class AuctionController extends AuctionBaseController {
     // 種品情報の表示
     public function home2() {
         // 自分が出品したBiditemをページネーションで取得
-        $biditems = $this->paginate('Biditem', [
-            'conditions' => ['Biditem.user_id' => $this->Auth->user('id')],
+        $biditems = $this->paginate('Biditems', [
+            'conditions' => ['Biditems.user_id' => $this->Auth->user('id')],
             'contain' => ['Users', 'Bidinfo'],
             'order' => ['created' => 'desc'],
             'limit' => 10
