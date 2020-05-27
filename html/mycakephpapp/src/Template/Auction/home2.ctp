@@ -8,6 +8,19 @@
         <th scope="col"><?= $this->Paginator->sort('created') ?></th>
         <th scope="col" class="actions"><?=__('Actions') ?></th>
     </tr>
+</tbody>
+<tbody>
+    <?php foreach ($biditems as $biditem): ?>
+    <tr>
+        <td><?= h($biditem->id) ?></td>
+        <td><?= h($biditem->name) ?></td>
+        <td><?= h($biditem->created) ?></td>
+        <td class="actions">
+            <?php if (!empty($biditem->bidinfo)): ?>
+            <?= $this->Html->link(__('View'), ['action' => 'msg', $biditem->bidinfo->id]) ?>
+            <?php endif; ?>
+        </td>
+    </tr>
     <?php endforeach; ?>
 </tbody>
 </table>
