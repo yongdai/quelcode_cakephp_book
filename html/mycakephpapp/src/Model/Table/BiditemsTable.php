@@ -87,6 +87,11 @@ class BiditemsTable extends Table
             ->maxLength('description', 1000)
             ->allowEmptyString('description');
 
+        $validator
+            ->scalar('image_path')
+            ->maxLength('image_path', 255)
+            ->allowEmptyFile('image_path');
+
         return $validator;
     }
 
