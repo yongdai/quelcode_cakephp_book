@@ -23,10 +23,10 @@
         <?php
             echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('name');
-            echo $this->Form->control('description');
-            echo $this->Form->input('image', array('label' => '画像のアップロード', 'type' => 'file', 'multiple'));
             echo $this->Form->control('finished');
             echo $this->Form->control('endtime');
+            echo $this->Form->control('description');
+            echo $this->Form->control('image_path');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
