@@ -46,7 +46,7 @@ class BiditemsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
-        $this->hasOne('Bidinfo', [
+        $this->hasMany('Bidinfo', [
             'foreignKey' => 'biditem_id',
         ]);
         $this->hasMany('Bidrequests', [
@@ -81,6 +81,11 @@ class BiditemsTable extends Table
             ->dateTime('endtime')
             ->requirePresence('endtime', 'create')
             ->notEmptyDateTime('endtime');
+
+        $validator
+            ->scalar('description')
+            ->maxLength('description', 1000)
+            ->allowEmptyString('description');
 
         return $validator;
     }

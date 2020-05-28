@@ -25,6 +25,7 @@
             echo $this->Form->control('name');
             echo $this->Form->control('finished');
             echo $this->Form->control('endtime');
+            echo $this->Form->control('description');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
