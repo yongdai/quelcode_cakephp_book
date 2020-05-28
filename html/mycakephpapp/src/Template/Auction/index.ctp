@@ -4,6 +4,7 @@
 <thead>
     <tr>
         <th class="main" scope="col"><?= $this->Paginator->sort('name') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('image_path') ?></th>
         <th scope="col"><?= $this->Paginator->sort('finished') ?></th>
         <th scope="col"><?= $this->Paginator->sort('endtime') ?></th>
         <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -13,6 +14,7 @@
     <?php foreach($auction as $biditem): ?>
     <tr>
         <td><?= h($biditem->name) ?></td>
+        <td><?= $this->Html->image("http://localhost:10020/" . "upimage/" . $biditem->image_path, array('height' => 100, 'width' => 100)) ?></td>
         <td><?= h($biditem->finished ? 'Finished': '') ?></td>
         <td><?= h($biditem->endtime) ?></td>
         <td class="actions">
