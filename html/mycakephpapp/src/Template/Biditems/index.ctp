@@ -40,7 +40,7 @@
                 <td><?= h($biditem->finished) ?></td>
                 <td><?= h($biditem->endtime) ?></td>
                 <td><?= h($biditem->created) ?></td>
-                <td><?= h($biditem->image_path) ?></td>
+                <td><?= $this->Html->image("http://localhost:10020/" . "upimage/" . $biditem->image_path, array('height' => 100, 'width' => 100)) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $biditem->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $biditem->id]) ?>
