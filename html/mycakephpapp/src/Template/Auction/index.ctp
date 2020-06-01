@@ -16,7 +16,7 @@
     <tr>
         <td><?= h($biditem->name) ?></td>
         <td class="timer"></td>
-        <td><?= $this->Html->image('/upimage/' . $biditem->image_path, array('height' => 100, 'width' => 100)) ?></td>
+        <td><?= $this->Html->image('/upimage/' . $biditem->image_name, array('height' => 100, 'width' => 100)) ?></td>
         <td><?= h($biditem->finished ? 'Finished': '') ?></td>
         <td class="endtime"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
         <td class="actions">
