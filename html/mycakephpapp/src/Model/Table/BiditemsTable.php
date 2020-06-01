@@ -88,15 +88,9 @@ class BiditemsTable extends Table
             ->allowEmptyString('description');
 
         $validator
-            ->scalar('image_path')
-            ->maxLength('image_path', 255)
-            ->allowEmptyFile('image_path')
-            ->add('image_path', [
-                'validExtension' => [
-                    'rule' => ['extension', ['gif', 'jpeg', 'png', 'jpg']],
-                    'message' => __('画像ファイルのみアップロードできます。')
-                    ]
-                ]);
+            ->scalar('image_name')
+            ->maxLength('image_name', 255)
+            ->allowEmptyFile('image_name');
 
         return $validator;
     }
