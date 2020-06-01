@@ -95,6 +95,7 @@ class BiditemsTable extends Table
                 'validExtension' => [
                     'rule' => ['extension', ['gif', 'jpeg', 'png', 'jpg']],
                     'message' => __('画像ファイルのみアップロードできます。')
+                    ]
                 ]);
 
         return $validator;
