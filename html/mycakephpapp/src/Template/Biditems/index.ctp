@@ -37,9 +37,9 @@
                 <td><?= $this->Number->format($biditem->id) ?></td>
                 <td><?= $biditem->has('user') ? $this->Html->link($biditem->user->id, ['controller' => 'Users', 'action' => 'view', $biditem->user->id]) : '' ?></td>
                 <td><?= h($biditem->name) ?></td>
-                <td class="timer"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
-                <td><?= h($biditem->endtime) ?></td>
-                <td><?= h($biditem->created) ?></td>
+                <td class="timer"></td>
+                <td class="endtime"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
+                <td><?= h($biditem->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
                 <td><?= $this->Html->image('/upimage/' . $biditem->image_name, array('height' => 100, 'width' => 100)) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $biditem->id]) ?>
