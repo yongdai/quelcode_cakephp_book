@@ -15,10 +15,10 @@
     <?php foreach($auction as $biditem): ?>
     <tr>
         <td><?= h($biditem->name) ?></td>
-        <td class="timer"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
+        <td class="timer"></td>
         <td><?= $this->Html->image("http://localhost:10020/" . "upimage/" . $biditem->image_path, array('height' => 100, 'width' => 100)) ?></td>
         <td><?= h($biditem->finished ? 'Finished': '') ?></td>
-        <td><?= h($biditem->endtime) ?></td>
+        <td class="endtime"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
         <td class="actions">
             <?= $this->Html->link(__('View'), ['action' => 'view', $biditem->id]) ?>
         </td>
