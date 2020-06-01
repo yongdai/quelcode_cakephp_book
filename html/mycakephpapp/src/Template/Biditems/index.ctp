@@ -27,7 +27,7 @@
                 <th scope="col"><?= __('残り時間') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('endtime') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('image_path') ?></th>
+                <th scope="col"><?= __('Image') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -40,7 +40,7 @@
                 <td class="timer"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
                 <td><?= h($biditem->endtime) ?></td>
                 <td><?= h($biditem->created) ?></td>
-                <td><?= $this->Html->image('/upimage/' . $biditem->image_path, array('height' => 100, 'width' => 100)) ?></td>
+                <td><?= $this->Html->image('/upimage/' . $biditem->image_name, array('height' => 100, 'width' => 100)) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $biditem->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $biditem->id]) ?>
