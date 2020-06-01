@@ -105,7 +105,7 @@ class AuctionController extends AuctionBaseController {
                 'finished' => $this->request->getData('finished'),
                 'endtime' => $this->request->getData('endtime'),
                 'description' => $this->request->getData('description'),
-                'image_path' => $file_name
+                'image_name' => $file_name
             );
             // $biditemにフォームの送信内容を設定
             $biditem = $this->Biditems->patchEntity($biditem, $data);
