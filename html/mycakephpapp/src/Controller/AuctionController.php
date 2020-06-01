@@ -50,7 +50,7 @@ class AuctionController extends AuctionBaseController {
         ]);
 
         // オークション終了時の処理
-        if ($bidtime->endtime < new \DateTime('now') and $biditem->finished == 0) {
+        if ($biditem->endtime < new \DateTime('now') and $biditem->finished == 0) {
             // finishedを1に変更して保存
             $biditem->finished = 1;
             $this->Biditems->save($biditem);
