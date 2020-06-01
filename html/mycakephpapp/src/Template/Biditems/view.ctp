@@ -36,7 +36,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Image Path') ?></th>
-            <td><?= $this->Html->image('/upimage/' . $biditem->image_path, array('height' => 100, 'width' => 100)) ?></td>
+            <td><?= $this->Html->image('/upimage/' . $biditem->image_name, array('height' => 100, 'width' => 100)) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
