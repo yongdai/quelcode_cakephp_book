@@ -53,7 +53,6 @@ class BiditemsController extends AppController
         $biditem = $this->Biditems->newEntity();
         if ($this->request->is('post')) {
             $file = $this->request->getData('image');
-            var_dump($file['name']);
             //ファイルの先頭に時間をつけて重複を防ぐ
             $file_name = date("YmdHis") . $file['name'];
             //アップロード画像の保存先
@@ -67,7 +66,7 @@ class BiditemsController extends AppController
                 'finished' => $this->request->getData('finished'),
                 'endtime' => $this->request->getData('endtime'),
                 'description' => $this->request->getData('description'),
-                'image_path' => $file_name
+                'image_name' => $file_name
             );
             // $biditemにフォームの送信内容を設定
             $biditem = $this->Biditems->patchEntity($biditem, $data);
