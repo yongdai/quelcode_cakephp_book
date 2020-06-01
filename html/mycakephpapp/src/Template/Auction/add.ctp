@@ -8,7 +8,7 @@
         echo $this->Form->control('name');
         echo $this->Form->control('description');
         echo '画像をアップロード';
-        echo $this->Form->file('image');
+        echo $this->Form->file('image', ['accept' => 'image/*']);
         // echo $this->Form->input('image', array('label' => '画像のアップロード', 'type' => 'file', 'multiple'));
         echo $this->Form->hidden('finished', ['value' => 0]);
         echo $this->Form->control('endtime');
