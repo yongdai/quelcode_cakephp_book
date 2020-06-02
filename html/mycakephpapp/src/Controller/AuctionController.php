@@ -48,7 +48,7 @@ class AuctionController extends AuctionBaseController {
         $biditem = $this->Biditems->get($id, [
             'contain' => ['Users', 'Bidinfo', 'Bidinfo.Users']
         ]);
-        var_dump(new \DateTime('now'));
+
         // オークション終了時の処理
         if ($biditem->endtime < new \DateTime('now') and $biditem->finished == 0) {
             var_dump($biditem->endtime);
