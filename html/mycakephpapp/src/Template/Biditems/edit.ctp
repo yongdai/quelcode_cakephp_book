@@ -32,7 +32,6 @@
             echo $this->Form->control('finished');
             echo $this->Form->control('endtime');
             echo $this->Form->control('description');
-            echo $this->Form->control('image_name');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
