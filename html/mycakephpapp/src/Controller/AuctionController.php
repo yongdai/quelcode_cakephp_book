@@ -48,9 +48,10 @@ class AuctionController extends AuctionBaseController {
         $biditem = $this->Biditems->get($id, [
             'contain' => ['Users', 'Bidinfo', 'Bidinfo.Users']
         ]);
-
+        var_dump(new \DateTime('now'));
         // オークション終了時の処理
         if ($biditem->endtime < new \DateTime('now') and $biditem->finished == 0) {
+            var_dump($biditem->endtime);
             // finishedを1に変更して保存
             $biditem->finished = 1;
             $this->Biditems->save($biditem);
@@ -126,7 +127,7 @@ class AuctionController extends AuctionBaseController {
     // 入札の処理
     public function bid($biditem_id = null) {
         // 入札用のBidrequestインスタンスを用意
-        $bidrequest = $this->Bidreuqest->newEntity();
+        $bidrequest = $this->Bidrequests->newEntity();
         // $bidrequestにbiditem_idとuser_idを設定
         $bidrequest->biditem_id = $biditem_id;
         $bidrequest->user_id = $this->Auth->user('id');
