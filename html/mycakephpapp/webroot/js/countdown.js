@@ -15,11 +15,8 @@ var calc_time = function() {
     var timer = document.getElementsByClassName("timer");
 
     for (i = 0; i < endtime.length; i++) {
-        // サーバーから現在時刻の取得
-        var request = new XMLHttpRequest();
-        request.open('HEAD', "#", false);
-        request.send(null);
-        var current_time = new Date(request.getResponseHeader('Date')).getTime();
+        // 現在時刻の取得
+        var current_time = new Date().getTime();
         // 残り時間を算出
         var rest_time =[];
         rest_time[i] = new Date(endtime[i].innerHTML).getTime() - current_time;
