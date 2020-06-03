@@ -46,7 +46,7 @@ class BiditemsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
-        $this->hasMany('Bidinfo', [
+        $this->hasOne('Bidinfo', [
             'foreignKey' => 'biditem_id',
         ]);
         $this->hasMany('Bidrequests', [
