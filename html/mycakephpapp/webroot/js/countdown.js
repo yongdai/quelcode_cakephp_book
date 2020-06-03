@@ -11,12 +11,16 @@ var countdown = function (time) {
 
 var calc_time = function() {
 
+    var request = new XMLHttpRequest();
+    request.open('HEAD', "#", false);	
+    request.send(null);	
+    current_time = new Date(request.getResponseHeader('Date')).getTime();
+
     var endtime = document.getElementsByClassName("endtime");
     var timer = document.getElementsByClassName("timer");
 
     for (i = 0; i < endtime.length; i++) {
-        // 現在時刻の取得
-        var current_time = new Date().getTime();
+
         // 残り時間を算出
         var rest_time =[];
         rest_time[i] = new Date(endtime[i].innerHTML).getTime() - current_time;
@@ -37,4 +41,5 @@ var refresh = function() {
     setTimeout(calc_time, 1000);
 }
 
+//　カウントダウンタイマー開始
 calc_time();
