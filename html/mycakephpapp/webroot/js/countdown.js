@@ -35,10 +35,6 @@ var calc_time = function() {
             timer[i].textContent = time;
         }
     }
-    refresh();
-}
-
-var refresh = function() {
     setTimeout(calc_time, 1000);
 }
 
