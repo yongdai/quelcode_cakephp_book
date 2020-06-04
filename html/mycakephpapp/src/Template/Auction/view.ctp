@@ -50,7 +50,7 @@
     <tr>
         <td><?= h($biditem->bidinfo->user->username) ?></td>
         <td><?= h($biditem->bidinfo->price) ?>円</td>
-        <td><?= h($biditem->edntime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
+        <td><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
     </tr>
     </table>
     <?php else: ?>
