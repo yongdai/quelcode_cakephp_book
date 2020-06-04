@@ -117,8 +117,15 @@ class AuctionController extends AuctionBaseController {
                 // トップページ(index)に移動
                 return $this->redirect(['action' => 'index']);
             }
-            // 失敗時のメッセージ
-            $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+            if (!$biditem->getErrors()) {
+                $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+            } else {
+                foreach ($biditem->getErrors() as $key => $array) {
+                    foreach($array as $value) {
+                        $this->Flash->error($key . 'の' . $value);
+                    }
+                }
+            }
         }
         // 値を保存
         $this->set(compact('biditem'));
