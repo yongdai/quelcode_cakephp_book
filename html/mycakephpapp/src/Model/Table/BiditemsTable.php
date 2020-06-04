@@ -90,7 +90,11 @@ class BiditemsTable extends Table
         $validator
             ->scalar('image_name')
             ->maxLength('image_name', 255)
-            ->allowEmptyFile('image_name');
+            ->allowEmptyFile('image_name')
+            ->add('image_name', 'fileExtension', [
+                'rule' => ['extension', ['gif','jpeg','png','jpg']],
+                'message' => 'ファイル形式は、gif、jpeg、png、jpgのいずれかです。'
+            ]);
 
         return $validator;
     }
