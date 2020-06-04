@@ -21,18 +21,23 @@
     <td><?= $this->Number->format($biditem->id) ?></td>
 </tr>
 <tr>
+    <th scope="row">残り時間</th>
+    <td class="timer"></td>
+</tr>
+<tr>
     <th scope="row">終了時間</th>
-    <td><?= h($biditem->endtime) ?></td>
+    <td class="endtime"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
 </tr>
 <tr>
     <th scope="row">投稿時間</th>
-    <td><?= h($biditem->created) ?></td>
+    <td><?= h($biditem->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
 </tr>
 <tr>
     <th scope="row"><?= __('終了した？') ?></th>
     <td><?= $biditem->finished ? __('Yes') : __('No'); ?></td>
 </tr>
 </table>
+<?= $this->Html->script('countdown') ?>
 <div class="related">
     <h4><?= __('落札情報') ?></h4>
     <?php if (!empty($biditem->bidinfo)): ?>
@@ -45,7 +50,7 @@
     <tr>
         <td><?= h($biditem->bidinfo->user->username) ?></td>
         <td><?= h($biditem->bidinfo->price) ?>円</td>
-        <td><?= h($biditem->edntime) ?></td>
+        <td><?= h($biditem->edntime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
     </tr>
     </table>
     <?php else: ?>
@@ -70,7 +75,7 @@
     <tr>
         <td><?= h($bidrequest->user->username) ?></td>
         <td><?= h($bidrequest->price) ?></td>
-        <td><?= $bidrequest->created ?></td>
+        <td><?= $bidrequest->created->i18nFormat('YYYY/MM/dd HH:mm:ss') ?></td>
     </tr>
     <?php endforeach; ?>
     </tbody>
