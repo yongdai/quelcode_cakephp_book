@@ -43,18 +43,23 @@
             <td><?= $this->Number->format($biditem->id) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Timeleft') ?></th>
+            <td class="timer"></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Endtime') ?></th>
-            <td><?= h($biditem->endtime) ?></td>
+            <td class="endtime"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($biditem->created) ?></td>
+            <td><?= h($biditem->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Finished') ?></th>
             <td><?= $biditem->finished ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
+    <?= $this->Html->script('countdown') ?>
     <div class="related">
         <h4><?= __('Related Bidinfo') ?></h4>
         <?php if (!empty($biditem->bidinfo)): ?>
@@ -102,7 +107,7 @@
                 <td><?= h($bidrequests->biditem_id) ?></td>
                 <td><?= h($bidrequests->user_id) ?></td>
                 <td><?= h($bidrequests->price) ?></td>
-                <td><?= h($bidrequests->created) ?></td>
+                <td><?= h($bidrequests->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Bidrequests', 'action' => 'view', $bidrequests->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Bidrequests', 'action' => 'edit', $bidrequests->id]) ?>
