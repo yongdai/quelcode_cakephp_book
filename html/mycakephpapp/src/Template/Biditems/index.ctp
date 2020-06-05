@@ -24,9 +24,10 @@
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('finished') ?></th>
+                <th scope="col"><?= __('残り時間') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('endtime') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+                <th scope="col"><?= __('Image') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -36,9 +37,10 @@
                 <td><?= $this->Number->format($biditem->id) ?></td>
                 <td><?= $biditem->has('user') ? $this->Html->link($biditem->user->id, ['controller' => 'Users', 'action' => 'view', $biditem->user->id]) : '' ?></td>
                 <td><?= h($biditem->name) ?></td>
-                <td><?= h($biditem->finished) ?></td>
-                <td><?= h($biditem->endtime) ?></td>
-                <td><?= h($biditem->created) ?></td>
+                <td class="timer"></td>
+                <td class="endtime"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
+                <td><?= h($biditem->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
+                <td><?= $this->Html->image('/upimage/' . $biditem->image_name, array('height' => 100, 'width' => 100)) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $biditem->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $biditem->id]) ?>
@@ -46,6 +48,7 @@
                 </td>
             </tr>
             <?php endforeach; ?>
+            <?= $this->Html->script('countdown') ?>
         </tbody>
     </table>
     <div class="paginator">

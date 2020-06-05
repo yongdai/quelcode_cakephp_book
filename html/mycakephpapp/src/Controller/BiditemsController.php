@@ -52,7 +52,24 @@ class BiditemsController extends AppController
     {
         $biditem = $this->Biditems->newEntity();
         if ($this->request->is('post')) {
-            $biditem = $this->Biditems->patchEntity($biditem, $this->request->getData());
+            $file = $this->request->getData('image');
+            //ファイルの先頭に時間をつけて重複を防ぐ
+            $file_name = date("YmdHis") . $file['name'];
+            //アップロード画像の保存先
+            $filePath = WWW_ROOT . "upimage/" . $file_name;
+            //ファイルを移動
+            move_uploaded_file($file['tmp_name'], $filePath);
+
+            $data = array(
+                'user_id' => $this->request->getData('user_id'),
+                'name' => $this->request->getData('name'),
+                'finished' => $this->request->getData('finished'),
+                'endtime' => $this->request->getData('endtime'),
+                'description' => $this->request->getData('description'),
+                'image_name' => $file_name
+            );
+            // $biditemにフォームの送信内容を設定
+            $biditem = $this->Biditems->patchEntity($biditem, $data);
             if ($this->Biditems->save($biditem)) {
                 $this->Flash->success(__('The biditem has been saved.'));
 

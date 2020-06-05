@@ -11,10 +11,7 @@
 
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('auction.css') ?>
-    
-    <?= $this->Html->fetch('meta') ?>
-    <?= $this->Html->fetch('css') ?>
-    <?= $this->Html->fetch('script') ?>
+
 </head>
 
 <body>

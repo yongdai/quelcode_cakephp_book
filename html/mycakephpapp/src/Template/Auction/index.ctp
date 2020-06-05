@@ -4,6 +4,8 @@
 <thead>
     <tr>
         <th class="main" scope="col"><?= $this->Paginator->sort('name') ?></th>
+        <th scope="col"><?= __(' 残り時間　') ?></th>
+        <th scope="col"><?= __('Image') ?></th>
         <th scope="col"><?= $this->Paginator->sort('finished') ?></th>
         <th scope="col"><?= $this->Paginator->sort('endtime') ?></th>
         <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -13,13 +15,17 @@
     <?php foreach($auction as $biditem): ?>
     <tr>
         <td><?= h($biditem->name) ?></td>
+        <td class="timer"></td>
+        <td><?= $this->Html->image('/upimage/' . $biditem->image_name, array('height' => 100, 'width' => 100)) ?></td>
         <td><?= h($biditem->finished ? 'Finished': '') ?></td>
-        <td><?= h($biditem->endtime) ?></td>
+        <td class="endtime"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
         <td class="actions">
             <?= $this->Html->link(__('View'), ['action' => 'view', $biditem->id]) ?>
         </td>
     </tr>
+
     <?php endforeach; ?>
+    <?= $this->Html->script('countdown') ?>
 </tbody>
 </table>
 <div class="paginator">

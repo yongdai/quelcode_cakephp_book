@@ -20,9 +20,9 @@
 <?php if (!empty($bidmsgs)): ?>
     <?php foreach($bidmsgs as $msg): ?>
     <tr>
-        <td><?= h($bsg->user->username) ?></td>
-        <td><?= h($bsg->message) ?></td>
-        <td><?= h($bsg->created) ?></td>
+        <td><?= h($msg->user->username) ?></td>
+        <td><?= h($msg->message) ?></td>
+        <td><?= h($msg->created) ?></td>
     </tr>
 <?php endforeach; ?>
 <?php else: ?>

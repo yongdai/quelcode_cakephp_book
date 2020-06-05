@@ -9,22 +9,35 @@
     <td><?= h($biditem->name) ?></td>
 </tr>
 <tr>
+    <th scope="row">商品詳細</th>
+    <td><?= h($biditem->description) ?></td>
+</tr>
+<tr>
+    <th scope="row">商品画像</th>
+    <td><?= $this->Html->image('/upimage/' . $biditem->image_name, array('height' => 100, 'width' => 100)) ?></td>
+</tr>
+<tr>
     <th scope="row">商品ID</th>
     <td><?= $this->Number->format($biditem->id) ?></td>
 </tr>
 <tr>
+    <th scope="row">残り時間</th>
+    <td class="timer"></td>
+</tr>
+<tr>
     <th scope="row">終了時間</th>
-    <td><?= h($biditem->endtime) ?></td>
+    <td class="endtime"><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
 </tr>
 <tr>
     <th scope="row">投稿時間</th>
-    <td><?= h($biditem->created) ?></td>
+    <td><?= h($biditem->created->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
 </tr>
 <tr>
     <th scope="row"><?= __('終了した？') ?></th>
     <td><?= $biditem->finished ? __('Yes') : __('No'); ?></td>
 </tr>
 </table>
+<?= $this->Html->script('countdown') ?>
 <div class="related">
     <h4><?= __('落札情報') ?></h4>
     <?php if (!empty($biditem->bidinfo)): ?>
@@ -37,7 +50,7 @@
     <tr>
         <td><?= h($biditem->bidinfo->user->username) ?></td>
         <td><?= h($biditem->bidinfo->price) ?>円</td>
-        <td><?= h($biditem->edntime) ?></td>
+        <td><?= h($biditem->endtime->i18nFormat('YYYY/MM/dd HH:mm:ss')) ?></td>
     </tr>
     </table>
     <?php else: ?>
@@ -52,9 +65,9 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
     <tr>
-        <th scope="col">入札者<th>
-        <th scope="col">金額<th>
-        <th scope="col">入札日時<th>
+        <th scope="col">入札者</th>
+        <th scope="col">金額</th>
+        <th scope="col">入札日時</th>
     </tr>
     </thead>
     <tbody>
@@ -62,7 +75,7 @@
     <tr>
         <td><?= h($bidrequest->user->username) ?></td>
         <td><?= h($bidrequest->price) ?></td>
-        <td><?= $bidrequest->created ?></td>
+        <td><?= $bidrequest->created->i18nFormat('YYYY/MM/dd HH:mm:ss') ?></td>
     </tr>
     <?php endforeach; ?>
     </tbody>

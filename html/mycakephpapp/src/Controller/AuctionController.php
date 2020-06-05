@@ -50,7 +50,8 @@ class AuctionController extends AuctionBaseController {
         ]);
 
         // オークション終了時の処理
-        if ($bidtime->endtime < new \DateTime('now') and $biditem->finished == 0) {
+        if ($biditem->endtime < new \DateTime('now') and $biditem->finished == 0) {
+            var_dump($biditem->endtime);
             // finishedを1に変更して保存
             $biditem->finished = 1;
             $this->Biditems->save($biditem);
@@ -91,8 +92,24 @@ class AuctionController extends AuctionBaseController {
         $biditem = $this->Biditems->newEntity();
         // Post時の処理
         if ($this->request->isPost()) {
+            $file = $this->request->getData('image');
+            //ファイルの先頭に時間をつけて重複を防ぐ
+            $file_name = date("YmdHis") . $file['name'];
+            //アップロード画像の保存先
+            $filePath = WWW_ROOT . "upimage/" . $file_name;
+            //ファイルを移動
+            move_uploaded_file($file['tmp_name'], $filePath);
+
+            $data = array(
+                'user_id' => $this->request->getData('user_id'),
+                'name' => $this->request->getData('name'),
+                'finished' => $this->request->getData('finished'),
+                'endtime' => $this->request->getData('endtime'),
+                'description' => $this->request->getData('description'),
+                'image_name' => $file_name
+            );
             // $biditemにフォームの送信内容を設定
-            $biditem = $this->Biditems->patchEntity($biditem, $this->request->getData());
+            $biditem = $this->Biditems->patchEntity($biditem, $data);
             // $biditemを保存する
             if ($this->Biditems->save($biditem)) {
                 // 成功時のメッセージ
@@ -100,8 +117,15 @@ class AuctionController extends AuctionBaseController {
                 // トップページ(index)に移動
                 return $this->redirect(['action' => 'index']);
             }
-            // 失敗時のメッセージ
-            $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+            if (!$biditem->getErrors()) {
+                $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+            } else {
+                foreach ($biditem->getErrors() as $key => $array) {
+                    foreach($array as $value) {
+                        $this->Flash->error($key . 'の' . $value);
+                    }
+                }
+            }
         }
         // 値を保存
         $this->set(compact('biditem'));
@@ -110,7 +134,7 @@ class AuctionController extends AuctionBaseController {
     // 入札の処理
     public function bid($biditem_id = null) {
         // 入札用のBidrequestインスタンスを用意
-        $bidrequest = $this->Bidreuqest->newEntity();
+        $bidrequest = $this->Bidrequests->newEntity();
         // $bidrequestにbiditem_idとuser_idを設定
         $bidrequest->biditem_id = $biditem_id;
         $bidrequest->user_id = $this->Auth->user('id');

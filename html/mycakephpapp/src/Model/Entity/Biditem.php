@@ -12,6 +12,8 @@ use Cake\ORM\Entity;
  * @property bool $finished
  * @property \Cake\I18n\FrozenTime $endtime
  * @property \Cake\I18n\FrozenTime $created
+ * @property string|null $description
+ * @property string|null $image_name
  *
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Bidinfo[] $bidinfo
@@ -34,6 +36,8 @@ class Biditem extends Entity
         'finished' => true,
         'endtime' => true,
         'created' => true,
+        'description' => true,
+        'image_name' => true,
         'user' => true,
         'bidinfo' => true,
         'bidrequests' => true,

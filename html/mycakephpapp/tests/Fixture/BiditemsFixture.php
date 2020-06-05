@@ -21,6 +21,8 @@ class BiditemsFixture extends TestFixture
         'finished' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'endtime' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
+        'description' => ['type' => 'string', 'length' => 1000, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'image_name' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -43,8 +45,10 @@ class BiditemsFixture extends TestFixture
                 'user_id' => 1,
                 'name' => 'Lorem ipsum dolor sit amet',
                 'finished' => 1,
-                'endtime' => '2020-05-26 16:49:20',
-                'created' => '2020-05-26 16:49:20',
+                'endtime' => '2020-06-01 16:56:26',
+                'created' => '2020-06-01 16:56:26',
+                'description' => 'Lorem ipsum dolor sit amet',
+                'image_name' => 'Lorem ipsum dolor sit amet',
             ],
         ];
         parent::init();
