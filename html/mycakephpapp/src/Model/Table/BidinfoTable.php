@@ -68,9 +68,32 @@ class BidinfoTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
+            ->integer('biditem_id')
+            ->requirePresence('biditem_id', 'create')
+            ->notEmptyString('biditem_id');
+
+        $validator
             ->integer('price')
             ->requirePresence('price', 'create')
             ->notEmptyString('price');
+
+        $validator
+            ->scalar('ship_name')
+            ->maxLength('ship_name', 255)
+            ->allowEmptyString('ship_name');
+
+        $validator
+            ->scalar('ship_address')
+            ->maxLength('ship_address', 255)
+            ->allowEmptyString('ship_address');
+
+        $validator
+            ->notEmpty('ship_tel', 'required tel')
+            ->add('ship_tel', 'custom', [
+                'rule' => [$this, 'tel_check'],
+                'message' => '正しい電話番号を入れてください。'
+            ]);
+            
 
         return $validator;
     }

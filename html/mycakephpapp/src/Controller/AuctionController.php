@@ -51,7 +51,6 @@ class AuctionController extends AuctionBaseController {
 
         // オークション終了時の処理
         if ($biditem->endtime < new \DateTime('now') and $biditem->finished == 0) {
-            var_dump($biditem->endtime);
             // finishedを1に変更して保存
             $biditem->finished = 1;
             $this->Biditems->save($biditem);
@@ -75,6 +74,12 @@ class AuctionController extends AuctionBaseController {
             }
             // Biditemのbidinfoに$bidinfoを設定
             $biditem->bidinfo = $bidinfo;
+        }
+        //出品者か落札者であれば終了ページにリダイレクト
+        if ($biditem->finished == 1 and !empty($biditem->bidinfo->user->id)) {
+            if ($this->Auth->user('id') === $biditem->user->id | $this->Auth->user('id') === $biditem->bidinfo->user->id) {
+                return $this->redirect(['action' => 'end', $id]);
+            }
         }
         // Bidrequestsからbiditem_idが$idのものを取得
         $bidrequests = $this->Bidrequests->find('all', [
@@ -211,6 +216,33 @@ class AuctionController extends AuctionBaseController {
             'limit' => 10
         ])->toArray();
         $this->set(compact('biditems'));
+    }
+
+    // 落札後ページの表示
+    public function end($id) {
+
+        $idのBiditemを取得
+        $biditem = $this->Biditems->get($id, [
+            'contain' => ['Users', 'Bidinfo', 'Bidinfo.Users']
+        ]);
+
+        $bidinfo = $this->Bidinfo->find('all', [
+            'contain' => ['Users', 'Biditems', 'Biditems.Users']
+        ])->where(['biditem_id' => $id])->first();
+
+        if ($this->request->isPost()) {
+            // 送信されたフォームで$bidmsgを更新
+            $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData());
+            // Bidinfoを保存
+            if ($this->Bidinfo->save($bidinfo)) {
+                // 成功時のメッセージ
+                $this->Flash->success(__('保存しました。'));
+            } else {
+                $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+            }
+        }
+        // オブジェクト類をテンプレート用に設定
+        $this->set(compact('biditem', 'bidinfo'));
     }
 }
 ?>
