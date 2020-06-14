@@ -37,7 +37,7 @@ class BidinfoTable extends Table
         parent::initialize($config);
 
         $this->setTable('bidinfo');
-        $this->setDisplayField('id');
+        $this->setDisplayField('biditem_id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -80,19 +80,15 @@ class BidinfoTable extends Table
         $validator
             ->scalar('ship_name')
             ->maxLength('ship_name', 255)
-            ->allowEmptyString('ship_name');
+            ->notEmptyString('ship_name');
 
         $validator
             ->scalar('ship_address')
             ->maxLength('ship_address', 255)
-            ->allowEmptyString('ship_address');
+            ->notEmptyString('ship_address');
 
         $validator
-            ->notEmpty('ship_tel', 'required tel')
-            ->add('ship_tel', 'custom', [
-                'rule' => [$this, 'tel_check'],
-                'message' => '正しい電話番号を入れてください。'
-            ]);
+            ->notEmpty('ship_tel', 'required tel');
             
 
         return $validator;
