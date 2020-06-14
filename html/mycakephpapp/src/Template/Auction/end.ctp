@@ -48,7 +48,7 @@
     <?= $this->Form->hidden('Bidinfo.is_shipped', ['value' => true]) ?>
     <?= $this->Form->button('発送済み') ?>
     <?= $this->Form->end() ?>
-    <?php elseif ($authuser['id'] == $biditem->bidinfo->user->id): ?>
+    <?php elseif ($authuser['id'] == $biditem->bidinfo->user->id && $bidinfo->is_received === false): ?>
     <?= $this->Form->create($bidinfo, [
         'type' => 'post',
         'url' => ['controller' => 'Auction',
