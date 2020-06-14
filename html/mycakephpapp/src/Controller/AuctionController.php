@@ -78,7 +78,7 @@ class AuctionController extends AuctionBaseController {
         //出品者か落札者であれば終了ページにリダイレクト
         if ($biditem->finished == 1 and !empty($biditem->bidinfo->user->id)) {
             if ($this->Auth->user('id') === $biditem->user->id | $this->Auth->user('id') === $biditem->bidinfo->user->id) {
-                return $this->redirect(['action' => 'end', $id]);
+                return $this->redirect(['action' => 'end', $biditem->id]);
             }
         }
         // Bidrequestsからbiditem_idが$idのものを取得
@@ -221,7 +221,7 @@ class AuctionController extends AuctionBaseController {
     // 落札後ページの表示
     public function end($id) {
 
-        $idのBiditemを取得
+        // $idのBiditemを取得
         $biditem = $this->Biditems->get($id, [
             'contain' => ['Users', 'Bidinfo', 'Bidinfo.Users']
         ]);
@@ -230,9 +230,11 @@ class AuctionController extends AuctionBaseController {
             'contain' => ['Users', 'Biditems', 'Biditems.Users']
         ])->where(['biditem_id' => $id])->first();
 
+        //pr($this->Auth->user());
+        //pr($biditem);
         if ($this->request->isPost()) {
             // 送信されたフォームで$bidmsgを更新
-            $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData());
+            $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData('Bidinfo'));
             // Bidinfoを保存
             if ($this->Bidinfo->save($bidinfo)) {
                 // 成功時のメッセージ
