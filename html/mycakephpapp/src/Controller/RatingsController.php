@@ -20,11 +20,11 @@ class RatingsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Bidinfos', 'Buyers', 'Sellers'],
+            'contain' => ['Bidinfo', 'Users'],
         ];
-        $ratings = $this->paginate($this->Ratings);
+        $rating = $this->paginate($this->Ratings);
 
-        $this->set(compact('ratings'));
+        $this->set(compact('rating'));
     }
 
     /**
@@ -37,7 +37,7 @@ class RatingsController extends AppController
     public function view($id = null)
     {
         $rating = $this->Ratings->get($id, [
-            'contain' => ['Bidinfos', 'Buyers', 'Sellers'],
+            'contain' => ['Bidinfo', 'Buyers', 'Sellers'],
         ]);
 
         $this->set('rating', $rating);
@@ -60,10 +60,10 @@ class RatingsController extends AppController
             }
             $this->Flash->error(__('The rating could not be saved. Please, try again.'));
         }
-        $bidinfos = $this->Ratings->Bidinfos->find('list', ['limit' => 200]);
-        $buyers = $this->Ratings->Buyers->find('list', ['limit' => 200]);
-        $sellers = $this->Ratings->Sellers->find('list', ['limit' => 200]);
-        $this->set(compact('rating', 'bidinfos', 'buyers', 'sellers'));
+        $bidinfo = $this->Ratings->Bidinfo->find('list', ['limit' => 200]);
+        $buyers = $this->Ratings->Users->find('list', ['limit' => 200]);
+        $sellers = $this->Ratings->Users->find('list', ['limit' => 200]);
+        $this->set(compact('rating', 'bidinfo', 'buyers', 'sellers'));
     }
 
     /**
@@ -88,8 +88,8 @@ class RatingsController extends AppController
             $this->Flash->error(__('The rating could not be saved. Please, try again.'));
         }
         $bidinfos = $this->Ratings->Bidinfos->find('list', ['limit' => 200]);
-        $buyers = $this->Ratings->Buyers->find('list', ['limit' => 200]);
-        $sellers = $this->Ratings->Sellers->find('list', ['limit' => 200]);
+        $buyers = $this->Ratings->Users->find('list', ['limit' => 200]);
+        $sellers = $this->Ratings->Users->find('list', ['limit' => 200]);
         $this->set(compact('rating', 'bidinfos', 'buyers', 'sellers'));
     }
 

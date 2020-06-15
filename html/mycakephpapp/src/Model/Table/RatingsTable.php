@@ -38,16 +38,18 @@ class RatingsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Bidinfos', [
+        $this->belongsTo('Bidinfo', [
             'foreignKey' => 'bidinfo_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Buyers', [
-            'foreignKey' => 'buyer_id',
+        $this->belongsTo('Users', [
+            'foreignKey' => 'id',
+            'bindingKey' => 'buyer_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Sellers', [
-            'foreignKey' => 'seller_id',
+        $this->belongsTo('Users', [
+            'foreignKey' => 'id',
+            'bindingKey' => 'seller_id',
             'joinType' => 'INNER',
         ]);
     }
@@ -66,34 +68,28 @@ class RatingsTable extends Table
 
         $validator
             ->integer('buyer_rating')
-            ->requirePresence('buyer_rating', 'create')
             ->notEmptyString('buyer_rating');
 
         $validator
             ->scalar('comment_to_buyer')
             ->maxLength('comment_to_buyer', 255)
-            ->requirePresence('comment_to_buyer', 'create')
             ->notEmptyString('comment_to_buyer');
 
         $validator
             ->dateTime('buyer_rating_created')
-            ->requirePresence('buyer_rating_created', 'create')
             ->notEmptyDateTime('buyer_rating_created');
 
         $validator
             ->integer('seller_rating')
-            ->requirePresence('seller_rating', 'create')
             ->notEmptyString('seller_rating');
 
         $validator
             ->scalar('comment_to_seller')
             ->maxLength('comment_to_seller', 255)
-            ->requirePresence('comment_to_seller', 'create')
             ->notEmptyString('comment_to_seller');
 
         $validator
             ->dateTime('seller_rating_created')
-            ->requirePresence('seller_rating_created', 'create')
             ->notEmptyDateTime('seller_rating_created');
 
         return $validator;
@@ -108,9 +104,9 @@ class RatingsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['bidinfo_id'], 'Bidinfos'));
-        $rules->add($rules->existsIn(['buyer_id'], 'Buyers'));
-        $rules->add($rules->existsIn(['seller_id'], 'Sellers'));
+        $rules->add($rules->existsIn(['bidinfo_id'], 'Bidinfo'));
+        $rules->add($rules->existsIn(['id', 'buyer_id'], 'Users'));
+        $rules->add($rules->existsIn(['id', 'seller_id'], 'Users'));
 
         return $rules;
     }

@@ -42,8 +42,5 @@ class Rating extends Entity
         'seller_rating' => true,
         'comment_to_seller' => true,
         'seller_rating_created' => true,
-        'bidinfo' => true,
-        'buyer' => true,
-        'seller' => true,
     ];
 }
