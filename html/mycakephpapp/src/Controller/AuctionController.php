@@ -23,6 +23,7 @@ class AuctionController extends AuctionBaseController {
         $this->loadModel('Bidrequests');
         $this->loadModel('Bidinfo');
         $this->loadModel('Bidmessages');
+        $this->loadModel('Ratings');
 
         // ログインしているユーザー情報をauthuserに設定
         $this->set('authuser', $this->Auth->user());
@@ -221,6 +222,7 @@ class AuctionController extends AuctionBaseController {
     // 落札後ページの表示
     public function end($id) {
 
+        $rating = $this->Ratings->newEntity();
         // $idのBiditemを取得
         $biditem = $this->Biditems->get($id, [
             'contain' => ['Users', 'Bidinfo', 'Bidinfo.Users']
@@ -230,6 +232,7 @@ class AuctionController extends AuctionBaseController {
             'contain' => ['Users', 'Biditems', 'Biditems.Users']
         ])->where(['biditem_id' => $id])->first();
 
+        //pr($rating);
         //pr($this->Auth->user());
         //pr($biditem);
         if ($this->request->isPost()) {
@@ -244,7 +247,7 @@ class AuctionController extends AuctionBaseController {
             }
         }
         // オブジェクト類をテンプレート用に設定
-        $this->set(compact('biditem', 'bidinfo'));
+        $this->set(compact('biditem', 'bidinfo','rating'));
     }
 }
 ?>

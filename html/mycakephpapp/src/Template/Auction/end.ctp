@@ -72,6 +72,7 @@
     </table>
 </div>
 <div class="related">
+    <?php if ($authuser['id'] == $biditem->bidinfo->user->id): ?>
     <?php if (!isset($bidinfo->ship_name) || !isset($bidinfo->ship_address) || !isset($bidinfo->ship_tel)): ?>
     <h4><?= __('発送先入力フォーム') ?></h4>
     <?= $this->Form->create($bidinfo, [
@@ -89,6 +90,9 @@
     <?= $this->Form->button('配送元情報を確定') ?>
     <?= $this->Form->end() ?>
     <?php else: ?>
+    <?php endif; ?>
+    <?php else: ?>
+        <h4><?= __('発送先情報') ?></h4>
     <table cellpadding="0" cellspacing="0">
         <tr>
             <th scope="col">発送先名前</th>
@@ -96,29 +100,55 @@
             <th scope="col">発送先電話番号</th>
         </tr>
         <tr>
-            <td><?= h($bidinfo->ship_name) ?></td>
-            <td><?= h($bidinfo->ship_address) ?></td>
-            <td><?= h($bidinfo->ship_tel) ?></td>
+            <td><?php if (isset($bidinfo->ship_name)): ?><?= h($bidinfo->ship_name) ?><?php else: ?>未設定<?php endif; ?></td>
+            <td><?php if (isset($bidinfo->ship_address)): ?><?= h($bidinfo->ship_address) ?><?php else: ?>未設定<?php endif; ?></td>
+            <td><?php if (isset($bidinfo->ship_tel)): ?><?= h($bidinfo->ship_tel) ?><?php else: ?>未設定<?php endif; ?></td>
         </tr>
     </table>
     <?php endif; ?>
 </div>
 <div class="related">
     <h4><?= __('取引相手の評価') ?></h4>
-    <?php if (!empty($biditem->bidinfo)): ?>
+    <?php if ($authuser['id'] == $biditem->user_id && (!isset($rating->buyer_rating))): ?>
+    <?= $this->Form->create($bidinfo, [
+        'type' => 'post',
+        'url' => ['controller' => 'Auction',
+                'action' => 'end', $biditem->id]]) ?>
+    <?= $this->Form->hidden('Bidinfo.id', ['value' => $bidinfo->id]) ?>
+    <?= $this->Form->input('Bidinfo.buyer_rating', array(
+        'label' => '相手の評価',
+        'options' => array(5, 4, 3, 2, 1),
+        'empty' => '評価を選択してください。　5=良い〜1=悪い')); ?>
+    <h6>評価コメント</h6>
+    <?= $this->Form->textarea('Bidinfo.comment_to_buyer', ['rows' => 1]); ?>
+    <?= $this->Form->button('評価を確定') ?>
+    <?= $this->Form->end() ?>
+    <?php elseif ($authuser['id'] == $biditem->bidinfo->user->id && (!isset($rating->seller_rating))): ?>
+        <?= $this->Form->create($bidinfo, [
+        'type' => 'post',
+        'url' => ['controller' => 'Auction',
+                'action' => 'end', $biditem->id]]) ?>
+    <?= $this->Form->hidden('Bidinfo.id', ['value' => $bidinfo->id]) ?>
+    <?= $this->Form->input('Bidinfo.seller_rating', array(
+        'label' => '相手の評価',
+        'options' => array(5, 4, 3, 2, 1),
+        'empty' => '評価を選択してください。　5=良い〜1=悪い')); ?>
+    <h6>評価コメント</h6>
+    <?= $this->Form->textarea('Bidinfo.comment_to_seller', ['rows' => 1]); ?>
+    <?= $this->Form->button('評価を確定') ?>
+    <?= $this->Form->end() ?>
+    <?php endif; ?>
+    <h6>評価結果</h6>
     <table cellpadding="0" cellspacing="0">
     <tr>
-        <th scope="col">発送済み</th>
-        <th scope="col">受取済み</th>
+        <th scope="col">Seller評価</th>
+        <th scope="col">Buyer評価</th>
     </tr>
     <tr>
-        <td><?= h($biditem->bidinfo->user->username) ?></td>
-        <td><?= h($biditem->bidinfo->price) ?>円</td>
+        <td><?= h($rating->buyer_rating) ?></td>
+        <td><?= h($rating->seller_rating) ?></td>
     </tr>
     </table>
-    <?php else: ?>
-    <p><?= '※落札情報は、ありません。' ?></p>
-    <?php endif; ?>
 </div>
 <div class="related">
     <h4><?= __('メッセージ一覧') ?></h4>
