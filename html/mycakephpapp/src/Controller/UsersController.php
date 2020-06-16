@@ -19,6 +19,7 @@ class UsersController extends AppController
 
         parent::initialize();
 
+        $this->loadModel('Ratings');
         //各種コンポーネントのロード
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
@@ -108,10 +109,40 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Bidinfo', 'Biditems', 'Bidmessages', 'Bidrequests'],
+            'contain' => ['Bidinfo', 'Biditems', 'Bidmessages', 'Bidrequests', 'Ratings'],
         ]);
 
-        $this->set('user', $user);
+        $seller_rating_count = $this->Ratings->find('all')->where(['seller_id' => $id])->count();
+        $seller_rating = $this->Ratings->find('all')->where(['seller_id' => $id])->toArray();
+
+        $seller_rating_sum = 0;
+
+        foreach($seller_rating as $value) {
+            $seller_rating_sum += $value->seller_rating;
+        }
+
+        if ($seller_rating_count === 0) {
+            $seller_rating_avg = $seller_rating_sum;
+        } else {
+            $seller_rating_avg = round($seller_rating_sum / $seller_rating_count);
+        }
+
+        $buyer_rating_count = $this->Ratings->find('all')->where(['buyer_id' => $id])->count();
+        $buyer_rating = $this->Ratings->find('all')->where(['buyer_id' => $id])->toArray();
+
+        $buyer_rating_sum = 0;
+
+        foreach($buyer_rating as $value) {
+            $buyer_rating_sum += $value->buyer_rating;
+        }
+
+        if ($buyer_rating_count === 0) {
+            $buyer_rating_avg = $buyer_rating_sum;
+        } else {
+            $buyer_rating_avg = round($buyer_rating_sum / $buyer_rating_count);
+        }
+
+        $this->set(compact('user', 'buyer_rating_avg', 'seller_rating_avg'));
     }
 
     /**

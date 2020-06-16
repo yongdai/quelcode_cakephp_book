@@ -40,6 +40,14 @@
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($user->id) ?></td>
         </tr>
+        <tr>
+            <th scope="row"><?= __('出品者としての評価（５段階評価）') ?></th>
+            <td><?= h($seller_rating_avg) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('落札者としての評価（５段階評価）') ?></th>
+            <td><?= h($buyer_rating_avg) ?></td>
+        </tr>
     </table>
     <div class="related">
         <h4><?= __('Related Bidinfo') ?></h4>
