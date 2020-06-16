@@ -167,4 +167,29 @@
         </table>
         <?php endif; ?>
     </div>
+    <div class="related">
+        <h4><?= __('Related Ratings') ?></h4>
+        <?php if (!empty($rating)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col"><?= __('Buyer_Id') ?></th>
+                <th scope="col"><?= __('Seller_Id') ?></th>
+                <th scope="col"><?= __('Buyer_Rating') ?></th>
+                <th scope="col"><?= __('Seller_Rating') ?></th>
+                <th scope="col"><?= __('Comment_to_Buyer') ?></th>
+                <th scope="col"><?= __('Comment_to_Seller') ?></th>
+            </tr>
+            <?php foreach ($rating as $value): ?>
+            <tr>
+                <td><?= h($value->buyer_id) ?></td>
+                <td><?= h($value->seller_id) ?></td>
+                <td><?= h($value->buyer_rating) ?></td>
+                <td><?= h($value->seller_rating) ?></td>
+                <td><?= h($value->comment_to_buyer) ?></td>
+                <td><?= h($value->comment_to_seller) ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
 </div>

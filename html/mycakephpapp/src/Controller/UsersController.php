@@ -20,6 +20,9 @@ class UsersController extends AppController
         parent::initialize();
 
         $this->loadModel('Ratings');
+        $this->loadModel('Users');
+        $this->loadModel('Biditems');
+        $this->loadModel('Bidinfo');
         //各種コンポーネントのロード
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
@@ -112,6 +115,15 @@ class UsersController extends AppController
             'contain' => ['Bidinfo', 'Biditems', 'Bidmessages', 'Bidrequests', 'Ratings'],
         ]);
 
+        $rating = $this->Ratings->find('all', array(
+            'conditions' => array(
+                'OR' => array(
+                    'Ratings.buyer_id' => $id,
+                    'Ratings.seller_id' => $id,
+                ),
+            ),
+        ))->all();
+
         $seller_rating_count = $this->Ratings->find('all')->where(['seller_id' => $id])->count();
         $seller_rating = $this->Ratings->find('all')->where(['seller_id' => $id])->toArray();
 
@@ -142,7 +154,7 @@ class UsersController extends AppController
             $buyer_rating_avg = round($buyer_rating_sum / $buyer_rating_count);
         }
 
-        $this->set(compact('user', 'buyer_rating_avg', 'seller_rating_avg'));
+        $this->set(compact('user', 'rating', 'buyer_rating_avg', 'seller_rating_avg'));
     }
 
     /**
