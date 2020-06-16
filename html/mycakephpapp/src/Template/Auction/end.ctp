@@ -89,10 +89,9 @@
     <?= $this->Form->textarea('Bidinfo.ship_tel', ['rows' => 1]); ?>
     <?= $this->Form->button('配送元情報を確定') ?>
     <?= $this->Form->end() ?>
-    <?php else: ?>
     <?php endif; ?>
-    <?php else: ?>
-        <h4><?= __('発送先情報') ?></h4>
+    <?php endif; ?>
+    <h4><?= __('発送先情報') ?></h4>
     <table cellpadding="0" cellspacing="0">
         <tr>
             <th scope="col">発送先名前</th>
@@ -105,7 +104,6 @@
             <td><?php if (isset($bidinfo->ship_tel)): ?><?= h($bidinfo->ship_tel) ?><?php else: ?>未設定<?php endif; ?></td>
         </tr>
     </table>
-    <?php endif; ?>
 </div>
 <div class="related">
     <h4><?= __('取引相手の評価') ?></h4>
