@@ -146,11 +146,15 @@
     <table cellpadding="0" cellspacing="0">
     <tr>
         <th scope="col">Seller評価</th>
+        <th scope="col">Seller評価コメント</th>
         <th scope="col">Buyer評価</th>
+        <th scope="col">Buyer評価コメント</th>
     </tr>
     <tr>
         <td><?= h($rating->buyer_rating) ?></td>
+        <td><?= h($rating->comment_to_buyer) ?></td>
         <td><?= h($rating->seller_rating) ?></td>
+        <td><?= h($rating->comment_to_seller) ?></td>
     </tr>
     </table>
 </div>
