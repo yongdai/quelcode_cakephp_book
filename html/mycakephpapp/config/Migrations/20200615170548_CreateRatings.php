@@ -21,40 +21,40 @@ class CreateRatings extends AbstractMigration
         $table->addColumn('buyer_id', 'integer', [
             'default' => null,
             'limit' => 10,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('buyer_rating', 'integer', [
             'default' => null,
             'limit' => 5,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('comment_to_buyer', 'string', [
             'default' => null,
             'limit' => 255,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('buyer_rating_created', 'datetime', [
             'default' => null,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('seller_id', 'integer', [
             'default' => null,
             'limit' => 10,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('seller_rating', 'integer', [
             'default' => null,
             'limit' => 5,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('comment_to_seller', 'string', [
             'default' => null,
             'limit' => 255,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('seller_rating_created', 'datetime', [
             'default' => null,
-            'null' => false,
+            'null' => true,
         ]);
         $table->create();
     }
