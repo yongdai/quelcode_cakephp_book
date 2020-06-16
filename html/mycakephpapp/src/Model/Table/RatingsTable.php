@@ -68,10 +68,12 @@ class RatingsTable extends Table
 
         $validator
             ->integer('buyer_id')
+            ->maxLength('buyer_id', 10)
             ->allowEmpty('buyer_id');
 
         $validator
             ->integer('buyer_rating')
+            ->maxLength('buyer_rating', 5)
             ->allowEmpty('buyer_rating');
 
         $validator
@@ -85,10 +87,12 @@ class RatingsTable extends Table
 
         $validator
             ->integer('seller_id')
+            ->maxLength('seller_id', 10)
             ->allowEmpty('seller_id');
             
         $validator
             ->integer('seller_rating')
+            ->maxLength('seller_rating', 5)
             ->allowEmpty('seller_rating');
 
         $validator
