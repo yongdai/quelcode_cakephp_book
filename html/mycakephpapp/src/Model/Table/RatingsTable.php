@@ -67,30 +67,38 @@ class RatingsTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
+            ->integer('buyer_id')
+            ->allowEmpty('buyer_id');
+
+        $validator
             ->integer('buyer_rating')
-            ->notEmptyString('buyer_rating');
+            ->allowEmpty('buyer_rating');
 
         $validator
             ->scalar('comment_to_buyer')
             ->maxLength('comment_to_buyer', 255)
-            ->notEmptyString('comment_to_buyer');
+            ->allowEmptyString('comment_to_buyer');
 
         $validator
             ->dateTime('buyer_rating_created')
-            ->notEmptyDateTime('buyer_rating_created');
+            ->allowEmptyDateTime('buyer_rating_created');
 
         $validator
+            ->integer('seller_id')
+            ->allowEmpty('seller_id');
+            
+        $validator
             ->integer('seller_rating')
-            ->notEmptyString('seller_rating');
+            ->allowEmpty('seller_rating');
 
         $validator
             ->scalar('comment_to_seller')
             ->maxLength('comment_to_seller', 255)
-            ->notEmptyString('comment_to_seller');
+            ->allowEmptyString('comment_to_seller');
 
         $validator
             ->dateTime('seller_rating_created')
-            ->notEmptyDateTime('seller_rating_created');
+            ->allowEmptyDateTime('seller_rating_created');
 
         return $validator;
     }

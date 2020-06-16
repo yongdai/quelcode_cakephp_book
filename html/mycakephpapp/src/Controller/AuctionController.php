@@ -232,11 +232,19 @@ class AuctionController extends AuctionBaseController {
             'contain' => ['Users', 'Biditems', 'Biditems.Users']
         ])->where(['biditem_id' => $id])->first();
 
-        //pr($rating);
+        $messages = $this->Bidmessages->find('all', [
+            'contain' => ['Users']
+        ])->where(['bidinfo_id' => $biditem->bidinfo->id])->toArray();
+
+        if ($this->Ratings->find('all') !== null) {
+            $rating = $this->Ratings->find('all')->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
+        }
+
+        pr($rating);
         //pr($this->Auth->user());
         //pr($biditem);
-        if ($this->request->isPost()) {
-            // 送信されたフォームで$bidmsgを更新
+        if ($this->request->isPost() && $this->request->getData('Bidinfo')) {
+            // 送信されたフォームで$bidinfoを更新
             $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData('Bidinfo'));
             // Bidinfoを保存
             if ($this->Bidinfo->save($bidinfo)) {
@@ -245,9 +253,19 @@ class AuctionController extends AuctionBaseController {
             } else {
                 $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
             }
+        } elseif ($this->request->isPost() && $this->request->getData('Ratings')) {
+            // 送信されたフォームで$ratingsを更新
+            $rating = $this->Ratings->patchEntity($rating, $this->request->getData('Ratings'));
+            // Ratingsを保存
+            if ($this->Ratings->save($rating)) {
+                // 成功時のメッセージ
+                $this->Flash->success(__('保存しました。'));
+            } else {
+                $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+            }
         }
         // オブジェクト類をテンプレート用に設定
-        $this->set(compact('biditem', 'bidinfo','rating'));
+        $this->set(compact('biditem', 'bidinfo','rating', 'messages'));
     }
 }
 ?>
