@@ -167,7 +167,7 @@
     <tbody>
         <?php foreach($messages as $message): ?>
             <tr>
-                <td><?= h($message->message) ?></td>
+                <td><?= $this->Html->link(__(h($message->message)), ['action' => 'msg', $message->bidinfo_id]) ?></td>
                 <td><?= h($message->user->username) ?></td>
                 <td><?= h($message->created) ?></td>
             </tr>

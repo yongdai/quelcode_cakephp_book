@@ -171,7 +171,7 @@ class AuctionController extends AuctionBaseController {
         // Post送信時の処理
         if ($this->request->isPost()) {
             // 送信されたフォームで$bidmsgを更新
-            $bidmsg = $this->Bidmessages->patchEntity($bidmsg, $this->request->getData());
+            $bidmsg = $this->Bidmessages->patchEntity($bidmsg, $this->request->getData('Bidmessages'));
             // Bidmessageを保存
             if ($this->Bidmessages->save($bidmsg)) {
                 // 成功時のメッセージ
@@ -234,7 +234,7 @@ class AuctionController extends AuctionBaseController {
 
         $messages = $this->Bidmessages->find('all', [
             'contain' => ['Users']
-        ])->where(['bidinfo_id' => $biditem->bidinfo->id])->toArray();
+        ])->where(['bidinfo_id' => $bidinfo->id])->toArray();
         
         $record_check = $this->Ratings->find('all')
             ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
@@ -243,13 +243,6 @@ class AuctionController extends AuctionBaseController {
             $rating = $record_check;
         }
 
-        //pr($rating);
-        //$hogehoge = $rating[0][id];
-        //$rating = $this->Ratings->get($hogehoge);
-        //var_dump($hogehoge);
-        //pr($this->Ratings->id);
-        //pr($this->Auth->user());
-        //pr($biditem);
         if ($this->request->isPost() && $this->request->getData('Bidinfo')) {
             // 送信されたフォームで$bidinfoを更新
             $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData('Bidinfo'));
