@@ -193,8 +193,8 @@ class AuctionController extends AuctionBaseController {
             'order' => ['created' => 'desc']
         ]);
         $this->set(compact('bidmsgs', 'bidinfo', 'bidmsg'));
-    }
 
+    }
     // 落札情報の表示
     public function home() {
         // 自分が落札したBidinfoをページネーションで取得
@@ -235,12 +235,19 @@ class AuctionController extends AuctionBaseController {
         $messages = $this->Bidmessages->find('all', [
             'contain' => ['Users']
         ])->where(['bidinfo_id' => $biditem->bidinfo->id])->toArray();
-
-        if ($this->Ratings->find('all') !== null) {
-            $rating = $this->Ratings->find('all')->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
+        
+        $record_check = $this->Ratings->find('all')
+            ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
+        
+        if ($record_check) {
+            $rating = $record_check;
         }
 
-        pr($rating);
+        //pr($rating);
+        //$hogehoge = $rating[0][id];
+        //$rating = $this->Ratings->get($hogehoge);
+        //var_dump($hogehoge);
+        //pr($this->Ratings->id);
         //pr($this->Auth->user());
         //pr($biditem);
         if ($this->request->isPost() && $this->request->getData('Bidinfo')) {

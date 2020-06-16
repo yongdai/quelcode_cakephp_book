@@ -118,7 +118,7 @@
     <?= $this->Form->hidden('Ratings.buyer_id', ['value' => $biditem->bidinfo->user->id]) ?>
     <?= $this->Form->input('Ratings.buyer_rating', array(
         'label' => '相手の評価',
-        'options' => array(5, 4, 3, 2, 1),
+        'options' => array(5 => 5, 4 => 4, 3 => 3, 2 => 2, 1 => 1),
         'empty' => '評価を選択してください。　5=良い〜1=悪い')); ?>
     <h6>評価コメント</h6>
     <?= $this->Form->textarea('Ratings.comment_to_buyer', ['rows' => 1]); ?>
@@ -134,7 +134,7 @@
     <?= $this->Form->hidden('Ratings.seller_id', ['value' => $biditem->user_id]) ?>
     <?= $this->Form->input('Ratings.seller_rating', array(
         'label' => '相手の評価',
-        'options' => array(5, 4, 3, 2, 1),
+        'options' => array(5 => 5, 4 => 4, 3 => 3, 2 => 2, 1 => 1),
         'empty' => '評価を選択してください。　5=良い〜1=悪い')); ?>
     <h6>評価コメント</h6>
     <?= $this->Form->textarea('Ratings.comment_to_seller', ['rows' => 1]); ?>
