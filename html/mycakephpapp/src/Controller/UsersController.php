@@ -124,12 +124,13 @@ class UsersController extends AppController
             ),
         ))->all();
 
-        $seller_rating_count = $this->Ratings->find('all')->where(['seller_id' => $id])->count();
-        $seller_rating = $this->Ratings->find('all')->where(['seller_id' => $id])->toArray();
+        $seller_rating = $this->Ratings->find('all')->where(['seller_id' => $id]);
+        $seller_rating_count = $seller_rating->count();
+        $seller_rating_array = $seller_rating->toArray();
 
         $seller_rating_sum = 0;
 
-        foreach($seller_rating as $seller_ratings) {
+        foreach($seller_rating_array as $seller_ratings) {
             $seller_rating_sum += $seller_ratings->seller_rating;
         }
 
@@ -139,12 +140,13 @@ class UsersController extends AppController
             $seller_rating_avg = round($seller_rating_sum / $seller_rating_count);
         }
 
-        $buyer_rating_count = $this->Ratings->find('all')->where(['buyer_id' => $id])->count();
-        $buyer_rating = $this->Ratings->find('all')->where(['buyer_id' => $id])->toArray();
+        $buyer_rating = $this->Ratings->find('all')->where(['buyer_id' => $id]);
+        $buyer_rating_count = $buyer_rating->count();
+        $buyer_rating_array = $buyer_rating->toArray();
 
         $buyer_rating_sum = 0;
 
-        foreach($buyer_rating as $buyer_ratings) {
+        foreach($buyer_rating_array as $buyer_ratings) {
             $buyer_rating_sum += $buyer_ratings->buyer_rating;
         }
 
