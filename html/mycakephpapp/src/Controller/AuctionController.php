@@ -77,7 +77,7 @@ class AuctionController extends AuctionBaseController {
             $biditem->bidinfo = $bidinfo;
         }
         //出品者か落札者であれば終了ページにリダイレクト
-        if ($biditem->finished == 1 and !empty($biditem->bidinfo->user->id)) {
+        if ($biditem->finished == 1 && !empty($biditem->bidinfo->user->id)) {
             if ($this->Auth->user('id') === $biditem->user->id || $this->Auth->user('id') === $biditem->bidinfo->user->id) {
                 return $this->redirect(['action' => 'end', $biditem->id]);
             }
@@ -236,11 +236,13 @@ class AuctionController extends AuctionBaseController {
             'contain' => ['Users']
         ])->where(['bidinfo_id' => $bidinfo->id])->toArray();
         
+        //Ratingテーブルにすでに評価がされているかをチェック
         $record_check = $this->Ratings->find('all')
-            ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
-        
+            ->where(['bidinfo_id' => $biditem->bidinfo->id])->count();
+        //評価ががすでにある場合はViewにその評価内容を渡す
         if ($record_check) {
-            $rating = $record_check;
+            $rating = $record_check = $this->Ratings->find('all')
+            ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
         }
 
         if ($this->request->isPost() && $this->request->getData('Bidinfo')) {
@@ -254,6 +256,7 @@ class AuctionController extends AuctionBaseController {
                 $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
             }
         } elseif ($this->request->isPost() && $this->request->getData('Ratings')) {
+
             // 送信されたフォームで$ratingsを更新
             $rating = $this->Ratings->patchEntity($rating, $this->request->getData('Ratings'));
             // Ratingsを保存
