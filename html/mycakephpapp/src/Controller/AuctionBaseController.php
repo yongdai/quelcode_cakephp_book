@@ -56,7 +56,7 @@ class AuctionBaseController extends AppController {
     public function logout() {
         // セッションを破棄
         $this->request->session()->destroy();
-        return $this->redirect($this->Auth->logtou());
+        return $this->redirect($this->Auth->logout());
     }
 
     // 認証をしないページの設定
