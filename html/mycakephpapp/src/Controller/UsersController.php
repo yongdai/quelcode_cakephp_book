@@ -72,7 +72,7 @@ class UsersController extends AppController
     // 認証を使わないページの設定
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        // $this->Auth->allow(['login', 'index', 'add']); // 後で'add'を削除する
+        //$this->Auth->allow(['login', 'index', 'add']); // 後で'add'を削除する
         $this->Auth->allow(['login']);
     }
 
@@ -129,8 +129,8 @@ class UsersController extends AppController
 
         $seller_rating_sum = 0;
 
-        foreach($seller_rating as $value) {
-            $seller_rating_sum += $value->seller_rating;
+        foreach($seller_rating as $seller_ratings) {
+            $seller_rating_sum += $seller_ratings->seller_rating;
         }
 
         if ($seller_rating_count === 0) {
@@ -144,8 +144,8 @@ class UsersController extends AppController
 
         $buyer_rating_sum = 0;
 
-        foreach($buyer_rating as $value) {
-            $buyer_rating_sum += $value->buyer_rating;
+        foreach($buyer_rating as $buyer_ratings) {
+            $buyer_rating_sum += $buyer_ratings->buyer_rating;
         }
 
         if ($buyer_rating_count === 0) {
