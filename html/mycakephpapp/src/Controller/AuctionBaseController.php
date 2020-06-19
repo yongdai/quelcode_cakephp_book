@@ -82,4 +82,3 @@ class AuctionBaseController extends AppController {
         return false;
     }
 }
-?>

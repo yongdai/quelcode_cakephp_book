@@ -271,4 +271,3 @@ class AuctionController extends AuctionBaseController {
         $this->set(compact('biditem', 'bidinfo','rating', 'messages'));
     }
 }
-?>
