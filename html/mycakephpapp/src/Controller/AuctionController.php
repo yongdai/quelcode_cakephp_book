@@ -241,7 +241,7 @@ class AuctionController extends AuctionBaseController {
             ->where(['bidinfo_id' => $biditem->bidinfo->id])->count();
         //評価ががすでにある場合はViewにその評価内容を渡す
         if ($record_check) {
-            $rating = $record_check = $this->Ratings->find('all')
+            $rating = $this->Ratings->find('all')
             ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
         }
 
@@ -250,9 +250,17 @@ class AuctionController extends AuctionBaseController {
             $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData('Bidinfo'));
             // Bidinfoを保存
             if ($this->Bidinfo->save($bidinfo)) {
+                //結果を再度取得
+                $bidinfo = $this->Bidinfo->find('all', [
+                    'contain' => ['Users', 'Biditems', 'Biditems.Users']
+                ])->where(['biditem_id' => $id])->first();
                 // 成功時のメッセージ
                 $this->Flash->success(__('保存しました。'));
             } else {
+                //結果を再度取得
+                $bidinfo = $this->Bidinfo->find('all', [
+                    'contain' => ['Users', 'Biditems', 'Biditems.Users']
+                ])->where(['biditem_id' => $id])->first();
                 $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
             }
         } elseif ($this->request->isPost() && $this->request->getData('Ratings')) {
@@ -261,9 +269,15 @@ class AuctionController extends AuctionBaseController {
             $rating = $this->Ratings->patchEntity($rating, $this->request->getData('Ratings'));
             // Ratingsを保存
             if ($this->Ratings->save($rating)) {
+                //結果を再度取得
+                $rating = $this->Ratings->find('all')
+                ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
                 // 成功時のメッセージ
                 $this->Flash->success(__('保存しました。'));
             } else {
+                //結果を再度取得
+                $rating = $this->Ratings->find('all')
+                ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
                 $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
             }
         }
