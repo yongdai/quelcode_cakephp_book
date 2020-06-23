@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
@@ -69,7 +70,11 @@ class RatingsTable extends Table
         $validator
             ->integer('buyer_id')
             ->maxLength('buyer_id', 10)
-            ->allowEmpty('buyer_id');
+            ->allowEmpty('buyer_id')
+            ->add('buyer_id', 'userIdCheck', [
+                'rule' => [$this, 'userIdCheck'],
+                'message' => '存在しないユーザーです',
+            ]);
 
         $validator
             ->integer('buyer_rating')
@@ -88,7 +93,11 @@ class RatingsTable extends Table
         $validator
             ->integer('seller_id')
             ->maxLength('seller_id', 10)
-            ->allowEmpty('seller_id');
+            ->allowEmpty('seller_id')
+            ->add('seller_id', 'userIdCheck', [
+                'rule' => [$this, 'userIdCheck'],
+                'message' => '存在しないユーザーです',
+            ]);
             
         $validator
             ->integer('seller_rating')
@@ -122,4 +131,13 @@ class RatingsTable extends Table
 
         return $rules;
     }
+
+    public function userIdCheck($value) {
+
+        $Users = TableRegistry::getTableLocator()->get('Users');
+        return (bool) $Users->find()->where(['id' => $value])->count();
+
+    }
+
+
 }
