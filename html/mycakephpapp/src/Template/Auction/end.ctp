@@ -113,7 +113,7 @@
         'url' => ['controller' => 'Auction',
                 'action' => 'end', $biditem->id]]) ?>
     <?= $this->Form->hidden('Ratings.bidinfo_id', ['value' => $bidinfo->id]) ?>
-    <?= $this->Form->hidden('Ratings.buyer_id', ['value' => 100/*$biditem->bidinfo->user->i*/]) ?>
+    <?= $this->Form->hidden('Ratings.buyer_id', ['value' => $biditem->bidinfo->user->i]) ?>
     <?= $this->Form->input('Ratings.buyer_rating', array(
         'label' => '相手の評価',
         'options' => array(5 => 5, 4 => 4, 3 => 3, 2 => 2, 1 => 1),
