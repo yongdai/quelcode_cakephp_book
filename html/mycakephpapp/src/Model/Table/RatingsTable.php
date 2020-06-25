@@ -126,9 +126,6 @@ class RatingsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['bidinfo_id'], 'Bidinfo'));
-        $rules->add($rules->existsIn(['id', 'buyer_id'], 'Users'));
-        $rules->add($rules->existsIn(['id', 'seller_id'], 'Users'));
-
         return $rules;
     }
 
