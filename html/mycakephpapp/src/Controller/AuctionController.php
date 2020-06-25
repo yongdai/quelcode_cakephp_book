@@ -222,7 +222,6 @@ class AuctionController extends AuctionBaseController {
     // 落札後ページの表示
     public function end($id) {
 
-        $rating = $this->Ratings->newEntity();
         // $idのBiditemを取得
         $biditem = $this->Biditems->get($id, [
             'contain' => ['Users', 'Bidinfo', 'Bidinfo.Users']
@@ -235,14 +234,12 @@ class AuctionController extends AuctionBaseController {
         $messages = $this->Bidmessages->find('all', [
             'contain' => ['Users']
         ])->where(['bidinfo_id' => $bidinfo->id])->toArray();
-        
-        //Ratingテーブルにすでに評価がされているかをチェック
-        $record_check = $this->Ratings->find('all')
-            ->where(['bidinfo_id' => $biditem->bidinfo->id])->count();
-        //評価ががすでにある場合はViewにその評価内容を渡す
-        if ($record_check) {
-            $rating = $this->Ratings->find('all')
+
+        $rating = $this->Ratings->find('all')
             ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
+        //まだ評価されてない場合
+        if (!$rating) {
+            $rating = $this->Ratings->newEntity();
         }
 
         if ($this->request->isPost() && $this->request->getData('Bidinfo')) {
@@ -266,9 +263,9 @@ class AuctionController extends AuctionBaseController {
         } elseif ($this->request->isPost() && $this->request->getData('Ratings')) {
 
             // 送信されたフォームで$ratingsを更新
-            $rating = $this->Ratings->patchEntity($rating, $this->request->getData('Ratings'));
+            $rating　= $this->Ratings->patchEntity($rating, $this->request->getData('Ratings'));
             // Ratingsを保存
-            if ($this->Ratings->save($rating)) {
+            if ($this->Ratings->save($rating_new)) {
                 //結果を再度取得
                 $rating = $this->Ratings->find('all')
                 ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
