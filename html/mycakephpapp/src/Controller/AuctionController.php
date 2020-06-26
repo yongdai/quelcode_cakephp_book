@@ -77,7 +77,7 @@ class AuctionController extends AuctionBaseController {
             $biditem->bidinfo = $bidinfo;
         }
         //出品者か落札者であれば終了ページにリダイレクト
-        if ($biditem->finished === true && !empty($biditem->bidinfo->user->id)) {
+        if ($biditem->finished === true && isset($biditem->bidinfo->user->id)) {
             if ($this->Auth->user('id') === $biditem->user->id || $this->Auth->user('id') === $biditem->bidinfo->user->id) {
                 return $this->redirect(['action' => 'end', $biditem->id]);
             }
