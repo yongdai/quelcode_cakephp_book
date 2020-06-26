@@ -265,7 +265,7 @@ class AuctionController extends AuctionBaseController {
             // 送信されたフォームで$ratingsを更新
             $rating　= $this->Ratings->patchEntity($rating, $this->request->getData('Ratings'));
             // Ratingsを保存
-            if ($this->Ratings->save($rating_new)) {
+            if ($this->Ratings->save($rating)) {
                 //結果を再度取得
                 $rating = $this->Ratings->find('all')
                 ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
