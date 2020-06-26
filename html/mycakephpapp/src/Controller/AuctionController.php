@@ -23,6 +23,7 @@ class AuctionController extends AuctionBaseController {
         $this->loadModel('Bidrequests');
         $this->loadModel('Bidinfo');
         $this->loadModel('Bidmessages');
+        $this->loadModel('Ratings');
 
         // ログインしているユーザー情報をauthuserに設定
         $this->set('authuser', $this->Auth->user());
@@ -51,7 +52,6 @@ class AuctionController extends AuctionBaseController {
 
         // オークション終了時の処理
         if ($biditem->endtime < new \DateTime('now') and $biditem->finished == 0) {
-            var_dump($biditem->endtime);
             // finishedを1に変更して保存
             $biditem->finished = 1;
             $this->Biditems->save($biditem);
@@ -75,6 +75,12 @@ class AuctionController extends AuctionBaseController {
             }
             // Biditemのbidinfoに$bidinfoを設定
             $biditem->bidinfo = $bidinfo;
+        }
+        //出品者か落札者であれば終了ページにリダイレクト
+        if ($biditem->finished === true && isset($biditem->bidinfo->user->id)) {
+            if ($this->Auth->user('id') === $biditem->user->id || $this->Auth->user('id') === $biditem->bidinfo->user->id) {
+                return $this->redirect(['action' => 'end', $biditem->id]);
+            }
         }
         // Bidrequestsからbiditem_idが$idのものを取得
         $bidrequests = $this->Bidrequests->find('all', [
@@ -165,7 +171,7 @@ class AuctionController extends AuctionBaseController {
         // Post送信時の処理
         if ($this->request->isPost()) {
             // 送信されたフォームで$bidmsgを更新
-            $bidmsg = $this->Bidmessages->patchEntity($bidmsg, $this->request->getData());
+            $bidmsg = $this->Bidmessages->patchEntity($bidmsg, $this->request->getData('Bidmessages'));
             // Bidmessageを保存
             if ($this->Bidmessages->save($bidmsg)) {
                 // 成功時のメッセージ
@@ -187,8 +193,8 @@ class AuctionController extends AuctionBaseController {
             'order' => ['created' => 'desc']
         ]);
         $this->set(compact('bidmsgs', 'bidinfo', 'bidmsg'));
-    }
 
+    }
     // 落札情報の表示
     public function home() {
         // 自分が落札したBidinfoをページネーションで取得
@@ -212,5 +218,67 @@ class AuctionController extends AuctionBaseController {
         ])->toArray();
         $this->set(compact('biditems'));
     }
+
+    // 落札後ページの表示
+    public function end($id) {
+
+        // $idのBiditemを取得
+        $biditem = $this->Biditems->get($id, [
+            'contain' => ['Users', 'Bidinfo', 'Bidinfo.Users']
+        ]);
+
+        $bidinfo = $this->Bidinfo->find('all', [
+            'contain' => ['Users', 'Biditems', 'Biditems.Users']
+        ])->where(['biditem_id' => $id])->first();
+
+        $messages = $this->Bidmessages->find('all', [
+            'contain' => ['Users']
+        ])->where(['bidinfo_id' => $bidinfo->id])->toArray();
+
+        $rating = $this->Ratings->find('all')
+            ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
+        //まだ評価されてない場合
+        if (!$rating) {
+            $rating = $this->Ratings->newEntity();
+        }
+
+        if ($this->request->isPost() && $this->request->getData('Bidinfo')) {
+            // 送信されたフォームで$bidinfoを更新
+            $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData('Bidinfo'));
+            // Bidinfoを保存
+            if ($this->Bidinfo->save($bidinfo)) {
+                //結果を再度取得
+                $bidinfo = $this->Bidinfo->find('all', [
+                    'contain' => ['Users', 'Biditems', 'Biditems.Users']
+                ])->where(['biditem_id' => $id])->first();
+                // 成功時のメッセージ
+                $this->Flash->success(__('保存しました。'));
+            } else {
+                //結果を再度取得
+                $bidinfo = $this->Bidinfo->find('all', [
+                    'contain' => ['Users', 'Biditems', 'Biditems.Users']
+                ])->where(['biditem_id' => $id])->first();
+                $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+            }
+        } elseif ($this->request->isPost() && $this->request->getData('Ratings')) {
+
+            // 送信されたフォームで$ratingsを更新
+            $rating　= $this->Ratings->patchEntity($rating, $this->request->getData('Ratings'));
+            // Ratingsを保存
+            if ($this->Ratings->save($rating)) {
+                //結果を再度取得
+                $rating = $this->Ratings->find('all')
+                ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
+                // 成功時のメッセージ
+                $this->Flash->success(__('保存しました。'));
+            } else {
+                //結果を再度取得
+                $rating = $this->Ratings->find('all')
+                ->where(['bidinfo_id' => $biditem->bidinfo->id])->first();
+                $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+            }
+        }
+        // オブジェクト類をテンプレート用に設定
+        $this->set(compact('biditem', 'bidinfo','rating', 'messages'));
+    }
 }
-?>

@@ -40,6 +40,14 @@
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($user->id) ?></td>
         </tr>
+        <tr>
+            <th scope="row"><?= __('出品者としての評価（５段階評価）') ?></th>
+            <td><?= h($seller_ratings_avg) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('落札者としての評価（５段階評価）') ?></th>
+            <td><?= h($buyer_ratings_avg) ?></td>
+        </tr>
     </table>
     <div class="related">
         <h4><?= __('Related Bidinfo') ?></h4>
@@ -154,6 +162,31 @@
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Bidrequests', 'action' => 'edit', $bidrequests->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'Bidrequests', 'action' => 'delete', $bidrequests->id], ['confirm' => __('Are you sure you want to delete # {0}?', $bidrequests->id)]) ?>
                 </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
+    <div class="related">
+        <h4><?= __('Related Ratings') ?></h4>
+        <?php if (!empty($rating)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col"><?= __('Buyer_Id') ?></th>
+                <th scope="col"><?= __('Seller_Id') ?></th>
+                <th scope="col"><?= __('Buyer_Rating') ?></th>
+                <th scope="col"><?= __('Seller_Rating') ?></th>
+                <th scope="col"><?= __('Comment_to_Buyer') ?></th>
+                <th scope="col"><?= __('Comment_to_Seller') ?></th>
+            </tr>
+            <?php foreach ($rating as $value): ?>
+            <tr>
+                <td><?= h($value->buyer_id) ?></td>
+                <td><?= h($value->seller_id) ?></td>
+                <td><?= h($value->buyer_rating) ?></td>
+                <td><?= h($value->seller_rating) ?></td>
+                <td><?= h($value->comment_to_buyer) ?></td>
+                <td><?= h($value->comment_to_seller) ?></td>
             </tr>
             <?php endforeach; ?>
         </table>

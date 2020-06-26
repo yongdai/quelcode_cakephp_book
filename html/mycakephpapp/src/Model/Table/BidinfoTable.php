@@ -37,7 +37,7 @@ class BidinfoTable extends Table
         parent::initialize($config);
 
         $this->setTable('bidinfo');
-        $this->setDisplayField('id');
+        $this->setDisplayField('biditem_id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -68,9 +68,28 @@ class BidinfoTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
+            ->integer('biditem_id')
+            ->requirePresence('biditem_id', 'create')
+            ->notEmptyString('biditem_id');
+
+        $validator
             ->integer('price')
             ->requirePresence('price', 'create')
             ->notEmptyString('price');
+
+        $validator
+            ->scalar('ship_name')
+            ->maxLength('ship_name', 255)
+            ->notEmptyString('ship_name');
+
+        $validator
+            ->scalar('ship_address')
+            ->maxLength('ship_address', 255)
+            ->notEmptyString('ship_address');
+
+        $validator
+            ->notEmpty('ship_tel', 'required tel');
+            
 
         return $validator;
     }

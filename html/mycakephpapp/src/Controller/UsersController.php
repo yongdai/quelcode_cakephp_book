@@ -19,6 +19,10 @@ class UsersController extends AppController
 
         parent::initialize();
 
+        $this->loadModel('Ratings');
+        $this->loadModel('Users');
+        $this->loadModel('Biditems');
+        $this->loadModel('Bidinfo');
         //各種コンポーネントのロード
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
@@ -68,7 +72,7 @@ class UsersController extends AppController
     // 認証を使わないページの設定
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        // $this->Auth->allow(['login', 'index', 'add']); // 後で'add'を削除する
+        //$this->Auth->allow(['login', 'index', 'add']); // 後で'add'を削除する
         $this->Auth->allow(['login']);
     }
 
@@ -108,10 +112,51 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Bidinfo', 'Biditems', 'Bidmessages', 'Bidrequests'],
+            'contain' => ['Bidinfo', 'Biditems', 'Bidmessages', 'Bidrequests', 'Ratings'],
         ]);
 
-        $this->set('user', $user);
+        $ratings = $this->Ratings->find('all', array(
+            'conditions' => array(
+                'OR' => array(
+                    'Ratings.buyer_id' => $id,
+                    'Ratings.seller_id' => $id,
+                ),
+            ),
+        ))->all();
+
+        $seller_ratings = $this->Ratings->find('all')->where(['seller_id' => $id]);
+        $seller_ratings_count = $seller_ratings->count();
+        $seller_ratings_array = $seller_ratings->toArray();
+
+        $seller_ratings_sum = 0;
+
+        foreach($seller_ratings_array as $seller_rating) {
+            $seller_ratings_sum += $seller_rating->seller_rating;
+        }
+
+        if ($seller_ratings_count === 0) {
+            $seller_ratings_avg = $seller_ratings_sum;
+        } else {
+            $seller_ratings_avg = round($seller_ratings_sum / $seller_ratings_count);
+        }
+
+        $buyer_ratings = $this->Ratings->find('all')->where(['buyer_id' => $id]);
+        $buyer_ratings_count = $buyer_ratings->count();
+        $buyer_ratings_array = $buyer_ratings->toArray();
+
+        $buyer_ratings_sum = 0;
+
+        foreach($buyer_ratings_array as $buyer_rating) {
+            $buyer_ratings_sum += $buyer_rating->buyer_rating;
+        }
+
+        if ($buyer_ratings_count === 0) {
+            $buyer_ratings_avg = $buyer_ratings_sum;
+        } else {
+            $buyer_ratings_avg = round($buyer_ratings_sum / $buyer_ratings_count);
+        }
+
+        $this->set(compact('user', 'ratings', 'buyer_ratings_avg', 'seller_ratings_avg'));
     }
 
     /**
