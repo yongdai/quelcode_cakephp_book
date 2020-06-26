@@ -115,7 +115,7 @@ class UsersController extends AppController
             'contain' => ['Bidinfo', 'Biditems', 'Bidmessages', 'Bidrequests', 'Ratings'],
         ]);
 
-        $rating = $this->Ratings->find('all', array(
+        $ratings = $this->Ratings->find('all', array(
             'conditions' => array(
                 'OR' => array(
                     'Ratings.buyer_id' => $id,
@@ -124,39 +124,39 @@ class UsersController extends AppController
             ),
         ))->all();
 
-        $seller_rating = $this->Ratings->find('all')->where(['seller_id' => $id]);
-        $seller_rating_count = $seller_rating->count();
-        $seller_rating_array = $seller_rating->toArray();
+        $seller_ratings = $this->Ratings->find('all')->where(['seller_id' => $id]);
+        $seller_ratings_count = $seller_ratings->count();
+        $seller_ratings_array = $seller_ratings->toArray();
 
-        $seller_rating_sum = 0;
+        $seller_ratings_sum = 0;
 
-        foreach($seller_rating_array as $seller_ratings) {
-            $seller_rating_sum += $seller_ratings->seller_rating;
+        foreach($seller_ratings_array as $seller_rating) {
+            $seller_ratings_sum += $seller_rating->seller_rating;
         }
 
-        if ($seller_rating_count === 0) {
-            $seller_rating_avg = $seller_rating_sum;
+        if ($seller_ratings_count === 0) {
+            $seller_ratings_avg = $seller_ratings_sum;
         } else {
-            $seller_rating_avg = round($seller_rating_sum / $seller_rating_count);
+            $seller_ratings_avg = round($seller_ratings_sum / $seller_ratings_count);
         }
 
-        $buyer_rating = $this->Ratings->find('all')->where(['buyer_id' => $id]);
-        $buyer_rating_count = $buyer_rating->count();
-        $buyer_rating_array = $buyer_rating->toArray();
+        $buyer_ratings = $this->Ratings->find('all')->where(['buyer_id' => $id]);
+        $buyer_ratings_count = $buyer_ratings->count();
+        $buyer_ratings_array = $buyer_ratings->toArray();
 
-        $buyer_rating_sum = 0;
+        $buyer_ratings_sum = 0;
 
-        foreach($buyer_rating_array as $buyer_ratings) {
-            $buyer_rating_sum += $buyer_ratings->buyer_rating;
+        foreach($buyer_ratings_array as $buyer_rating) {
+            $buyer_ratings_sum += $buyer_rating->buyer_rating;
         }
 
-        if ($buyer_rating_count === 0) {
-            $buyer_rating_avg = $buyer_rating_sum;
+        if ($buyer_ratings_count === 0) {
+            $buyer_ratings_avg = $buyer_ratings_sum;
         } else {
-            $buyer_rating_avg = round($buyer_rating_sum / $buyer_rating_count);
+            $buyer_ratings_avg = round($buyer_ratings_sum / $buyer_ratings_count);
         }
 
-        $this->set(compact('user', 'rating', 'buyer_rating_avg', 'seller_rating_avg'));
+        $this->set(compact('user', 'ratings', 'buyer_ratings_avg', 'seller_ratings_avg'));
     }
 
     /**

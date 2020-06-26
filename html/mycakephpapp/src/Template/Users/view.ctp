@@ -42,11 +42,11 @@
         </tr>
         <tr>
             <th scope="row"><?= __('出品者としての評価（５段階評価）') ?></th>
-            <td><?= h($seller_rating_avg) ?></td>
+            <td><?= h($seller_ratings_avg) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('落札者としての評価（５段階評価）') ?></th>
-            <td><?= h($buyer_rating_avg) ?></td>
+            <td><?= h($buyer_ratings_avg) ?></td>
         </tr>
     </table>
     <div class="related">
